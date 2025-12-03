@@ -1,0 +1,124 @@
+body {
+    margin: 0;
+    margin-top: 50px;
+    font-family: sans-serif;
+}
+
+header {
+    display: flex;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 50px;
+	border: 1px solid black;
+    line-height: 50px;
+    background-color: #fff;
+}
+
+header * {
+    display: inline;
+    height: 50px;
+}
+
+header ul {
+    padding: 0;
+}
+
+header li {
+    margin-left: 20px;
+}
+
+section {
+    height: 100vh;
+    border: 1px solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: left;
+	color: #483D8B;
+    
+    background-size: cover; /* Add this line */
+    background-position: center center; /* Add this line */
+    background-repeat: no-repeat; /* Add this line */
+    background-attachment: fixed; /* Add this line */
+}
+
+#hero .profile-img {
+    width: 300px;
+    border-radius: 50%;
+}
+
+footer {
+    text-align: center;
+    padding: 50px;
+}
+
+#hero h1 {
+    font-size: 4em;
+}
+
+section h2 {
+    font-size: 3.5em;
+}
+
+section h3 {
+    font-size: 2.5em;
+}
+
+header a {
+    text-decoration: none;
+	font-size: 1.5em;
+    color: #483D8B;
+}
+
+/* Add everything below here */
+
+#hero {
+    background-image: linear-gradient(rgba(255,255,255,0.75),rgba(255,255,255,0.20)), url('../images/indexBackground.jpg');
+	text-shadow: black -1px -1px;
+}
+
+#about {
+    background-image: linear-gradient(rgba(255,255,255,0.75),rgba(255,255,255,0.20)), url('../images/lightBlueBackground.jpg');
+	text-shadow: black -1px -1px;
+}
+
+#contact {
+    background-image: linear-gradient(rgba(255,255,255,0.75),rgba(255,255,255,0.20)), url('../images/lightBlueBackground.jpg');
+	text-shadow: black -1px -1px;
+}
+
+.content-section {
+            min-height: 100vh;
+            padding-top: 60px; /* Space for fixed nav */
+        }
+        #main-nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(0,0,0,0.9);
+            z-index: 1000;
+            padding: 10px;
+            text-align: center;
+        }
+        #main-nav ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        #main-nav li {
+            display: inline-block;
+            margin: 0 15px;
+        }
+        #main-nav a {
+            color: white;
+            text-decoration: none;
+            padding: 5px 10px;
+        }
+        #main-nav a:hover {
+            background: rgba(255,255,255,0.2);
+        }
+        #content-container {
+            transition: opacity 0.3s ease;
+        }

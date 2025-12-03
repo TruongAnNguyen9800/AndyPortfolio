@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Truong An Nguyen's Personal Website</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html, body {
+            height: 100%;
+            overflow: hidden; /* Prevent main page scrolling */
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+        }
+        
+        /* Fixed Navigation */
+        .main-nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            z-index: 1000;
+            padding: 15px;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        
+        .main-nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 20px;
+            padding: 10px 20px;
+            border-radius: 25px;
+            transition: background 0.3s;
+            display: inline-block;
+        }
+        
+        .main-nav a:hover {
+            background: rgba(255,255,255,0.2);
+        }
+        
+        .nav-profile-img {
+            height: 40px;
+            width: 40px;
+            border-radius: 50%;
+            margin-right: 20px;
+            vertical-align: middle;
+            border: 2px solid white;
+        }
+        
+        /* Container for all iframes */
+        #scrolling-container {
+            position: absolute;
+            top: 70px; /* Height of navigation */
+            bottom: 0;
+            width: 100%;
+            overflow-y: scroll; /* Only this container scrolls */
+            scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+        }
+        
+        /* Remove scrollbar but keep functionality */
+        #scrolling-container::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        #scrolling-container::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        
+        #scrolling-container::-webkit-scrollbar-thumb {
+            background: #667eea;
+            border-radius: 4px;
+        }
+        
+        /* Each iframe takes full viewport height */
+        .page-iframe {
+            width: 100%;
+            height: calc(100vh - 70px); /* Full viewport minus nav height */
+            border: none;
+            display: block;
+            overflow: hidden; /* Remove iframe internal scroll */
+        }
+        
+        /* Navigation dots indicator */
+        .nav-dots {
+            position: fixed;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 1001;
+        }
+        
+        .dot {
+            display: block;
+            width: 12px;
+            height: 12px;
+            background: rgba(255,255,255,0.5);
+            border-radius: 50%;
+            margin: 15px 0;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .dot.active {
+            background: white;
+            transform: scale(1.3);
+        }
+        
+        /* Scroll hint - disappears after first scroll */
+        .scroll-hint {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0,0,0,0.7);
+            color: white;
+            padding: 10px 25px;
+            border-radius: 25px;
+            font-size: 14px;
+            z-index: 1001;
+            animation: pulse 2s infinite;
+            pointer-events: none;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 0.7; }
+            50% { opacity: 1; }
+        }
+        
+        /* Hide scroll hint after first interaction */
+        .scroll-hint.hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="main-nav">
+        <img src="images/tenor.gif" alt="Profile" class="nav-profile-img">
+        <a href="#home">Home</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+        <a href="#audio">Audio</a>
+    </nav>
+    
+    <!-- Navigation dots -->
+    <div class="nav-dots">
+        <div class="dot active" data-target="home"></div>
+        <div class="dot" data-target="about"></div>
+        <div class="dot" data-target="contact"></div>
+        <div class="dot" data-target="audio"></div>
+    </div>
+    
+    <!-- Scroll hint -->
+    <div class="scroll-hint">Use mouse wheel, arrow keys, or drag to scroll</div>
+    
+    <!-- Scrolling container with all iframes -->
+    <div id="scrolling-container">
+        <iframe id="home" src="index.html" class="page-iframe"></iframe>
+        <iframe id="about" src="about.html" class="page-iframe"></iframe>
+        <iframe id="contact" src="contact.html" class="page-iframe"></iframe>
+        <iframe id="about" src="audio.html" class="page-iframe"></iframe>
+    </div>
+    
+    <script>
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            const scrollingContainer = document.getElementById('scrolling-container');
+            const iframes = document.querySelectorAll('.page-iframe');
+            const navLinks = document.querySelectorAll('.main-nav a');
+            const dots = document.querySelectorAll('.dot');
+            const scrollHint = document.querySelector('.scroll-hint');
+            
+            // Function to update active dot
+            function updateActiveDot() {
+                const scrollPosition = scrollingContainer.scrollTop;
+                const iframeHeight = iframes[0].offsetHeight;
+                const currentIndex = Math.round(scrollPosition / iframeHeight);
+                
+                dots.forEach((dot, index) => {
+                    if (index === currentIndex) {
+                        dot.classList.add('active');
+                    } else {
+                        dot.classList.remove('active');
+                    }
+                });
+            }
+            
+            // Smooth scroll to iframe
+            function scrollToIframe(targetId) {
+                const targetIframe = document.getElementById(targetId);
+                if (targetIframe) {
+                    const offset = targetIframe.offsetTop;
+                    scrollingContainer.scrollTo({
+                        top: offset,
+                        behavior: 'smooth'
+                    });
+                }
+            }
+            
+            // Navigation links click handler
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href').substring(1);
+                    scrollToIframe(targetId);
+                });
+            });
+            
+            // Dot navigation click handler
+            dots.forEach(dot => {
+                dot.addEventListener('click', function() {
+                    const targetId = this.getAttribute('data-target');
+                    scrollToIframe(targetId);
+                });
+            });
+            
+            // Hide headers in iframes when they load
+            iframes.forEach(iframe => {
+                iframe.onload = function() {
+                    try {
+                        // Inject CSS to remove all scrollbars and headers
+                        const style = `
+                            <style>
+                                /* Remove ALL scrollbars */
+                                html, body {
+                                    overflow: hidden !important;
+                                    height: 100% !important;
+                                    margin: 0 !important;
+                                    padding: 0 !important;
+                                }
+                                
+                                /* Hide headers and footers */
+                                header, footer {
+                                    display: none !important;
+                                }
+                                
+                                /* Make sure content fills the iframe */
+                                body > * {
+                                    margin: 0 !important;
+                                }
+                                
+                                /* Remove any padding/margin that might cause overflow */
+                                main, section, div {
+                                    max-height: 100% !important;
+                                    overflow: hidden !important;
+                                }
+                            </style>
+                        `;
+                        
+                        // Try to inject style
+                        if (iframe.contentDocument && iframe.contentDocument.head) {
+                            iframe.contentDocument.head.insertAdjacentHTML('beforeend', style);
+                            
+                            // Also force the body to have no overflow
+                            if (iframe.contentDocument.body) {
+                                iframe.contentDocument.body.style.overflow = 'hidden';
+                                iframe.contentDocument.body.style.height = '100%';
+                            }
+                        }
+                    } catch (e) {
+                        // Cross-origin error, we'll handle it differently
+                        console.log('Could not modify iframe content (cross-origin)');
+                    }
+                };
+            });
+            
+            // Hide scroll hint on first interaction
+            function hideScrollHint() {
+                scrollHint.classList.add('hidden');
+                // Remove event listeners after hiding
+                scrollingContainer.removeEventListener('scroll', hideScrollHint);
+                window.removeEventListener('keydown', hideScrollHint);
+                window.removeEventListener('wheel', hideScrollHint);
+            }
+            
+            scrollingContainer.addEventListener('scroll', hideScrollHint);
+            window.addEventListener('keydown', hideScrollHint);
+            window.addEventListener('wheel', hideScrollHint);
+            
+            // Update active dot on scroll
+            scrollingContainer.addEventListener('scroll', updateActiveDot);
+            
+            // Initialize active dot
+            updateActiveDot();
+            
+            // Keyboard navigation
+            window.addEventListener('keydown', function(e) {
+                const iframeHeight = iframes[0].offsetHeight;
+                const currentScroll = scrollingContainer.scrollTop;
+                const maxScroll = scrollingContainer.scrollHeight - scrollingContainer.clientHeight;
+                
+                if (e.key === 'ArrowDown' || e.key === 'PageDown') {
+                    e.preventDefault();
+                    scrollingContainer.scrollBy({
+                        top: iframeHeight,
+                        behavior: 'smooth'
+                    });
+                } else if (e.key === 'ArrowUp' || e.key === 'PageUp') {
+                    e.preventDefault();
+                    scrollingContainer.scrollBy({
+                        top: -iframeHeight,
+                        behavior: 'smooth'
+                    });
+                } else if (e.key === 'Home') {
+                    e.preventDefault();
+                    scrollingContainer.scrollTo({
+                        top: 0,
+                        behavior: 'smooth'
+                    });
+                } else if (e.key === 'End') {
+                    e.preventDefault();
+                    scrollingContainer.scrollTo({
+                        top: maxScroll,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+            
+            // Mouse wheel scroll with page snapping
+            let isScrolling = false;
+            scrollingContainer.addEventListener('wheel', function(e) {
+                if (isScrolling) {
+                    e.preventDefault();
+                    return;
+                }
+                
+                isScrolling = true;
+                
+                const iframeHeight = iframes[0].offsetHeight;
+                const currentScroll = scrollingContainer.scrollTop;
+                const currentIndex = Math.round(currentScroll / iframeHeight);
+                
+                let targetIndex;
+                if (e.deltaY > 0) {
+                    // Scrolling down
+                    targetIndex = Math.min(currentIndex + 1, iframes.length - 1);
+                } else {
+                    // Scrolling up
+                    targetIndex = Math.max(currentIndex - 1, 0);
+                }
+                
+                scrollingContainer.scrollTo({
+                    top: targetIndex * iframeHeight,
+                    behavior: 'smooth'
+                });
+                
+                setTimeout(() => {
+                    isScrolling = false;
+                }, 500);
+                
+                e.preventDefault();
+            }, { passive: false });
+            
+            // Touch/swipe support for mobile
+            let touchStartY = 0;
+            scrollingContainer.addEventListener('touchstart', function(e) {
+                touchStartY = e.touches[0].clientY;
+            }, { passive: true });
+            
+            scrollingContainer.addEventListener('touchend', function(e) {
+                const touchEndY = e.changedTouches[0].clientY;
+                const deltaY = touchStartY - touchEndY;
+                
+                if (Math.abs(deltaY) > 50) { // Minimum swipe distance
+                    const iframeHeight = iframes[0].offsetHeight;
+                    const currentScroll = scrollingContainer.scrollTop;
+                    const currentIndex = Math.round(currentScroll / iframeHeight);
+                    
+                    let targetIndex;
+                    if (deltaY > 0) {
+                        // Swiped up
+                        targetIndex = Math.min(currentIndex + 1, iframes.length - 1);
+                    } else {
+                        // Swiped down
+                        targetIndex = Math.max(currentIndex - 1, 0);
+                    }
+                    
+                    scrollingContainer.scrollTo({
+                        top: targetIndex * iframeHeight,
+                        behavior: 'smooth'
+                    });
+                }
+            }, { passive: true });
+        });
+    </script>
+</body>
+</html>
