@@ -88,37 +88,3 @@ header a {
     background-image: linear-gradient(rgba(255,255,255,0.75),rgba(255,255,255,0.20)), url('../images/lightBlueBackground.jpg');
 	text-shadow: black -1px -1px;
 }
-
-.content-section {
-            min-height: 100vh;
-            padding-top: 60px; /* Space for fixed nav */
-        }
-        #main-nav {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            background: rgba(0,0,0,0.9);
-            z-index: 1000;
-            padding: 10px;
-            text-align: center;
-        }
-        #main-nav ul {
-            list-style: none;
-            margin: 0;
-            padding: 0;
-        }
-        #main-nav li {
-            display: inline-block;
-            margin: 0 15px;
-        }
-        #main-nav a {
-            color: white;
-            text-decoration: none;
-            padding: 5px 10px;
-        }
-        #main-nav a:hover {
-            background: rgba(255,255,255,0.2);
-        }
-        #content-container {
-            transition: opacity 0.3s ease;
-        }

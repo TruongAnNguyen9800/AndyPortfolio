@@ -1,21 +1,32 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Truong An Nguyen's Personal Website</title>
-        <link rel="stylesheet" href="css/style.css">
-
-        <meta http-equiv="refresh" content="0; url=main.html">
-    </head>
-    <body>
-        <main>
-            <section id="hero">
-                <div class="section-inner">
-                    <img src="images/tenor.gif" alt="random gif(1)">
-                    <h1>Truong An Nguyen</h1>
-                    <h3>(just a random gif above:) )</h3>
-                </div>
-            </section>
-            
-        </main>
-    </body>
+<head>
+    <title>Truong An Nguyen's Personal Website</title>
+    <link rel="stylesheet" href="css/index.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="main-nav">
+        <img src="images/tenor.gif" alt="Profile" class="nav-profile-img">
+        <a href="#home">Home</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+    </nav>
+    
+    <!-- Navigation dots -->
+    <div class="nav-dots">
+        <div class="dot active" data-target="home"></div>
+        <div class="dot" data-target="about"></div>
+        <div class="dot" data-target="contact"></div>
+    </div>
+    
+    <!-- Scrolling container with all iframes -->
+    <div id="scrolling-container">
+        <iframe id="home" src="main.html" class="page-iframe"></iframe>
+        <iframe id="about" src="about.html" class="page-iframe"></iframe>
+        <iframe id="contact" src="contact.html" class="page-iframe"></iframe>
+    </div>
+    
+    <script src="js/index.js"></script>
+</body>
 </html>
