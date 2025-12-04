@@ -1,0 +1,64 @@
+/* main.css */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Montserrat', sans-serif; /* optional: change to your font */
+    background-color: #fff; /* white background */
+    color: #fff;
+}
+
+/* Hero section takes full viewport height */
+#hero {
+    display: flex;
+    justify-content: space-between; /* text left, image right */
+    align-items: center;
+    height: 100vh;
+    padding: 0 50px; /* space from edges */
+}
+
+/* Inner wrapper for text */
+.section-inner {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px; /* lines closer together */
+    max-width: 50%; /* take half the width */
+}
+
+/* Text sizes */
+.section-inner h4 {
+    font-size: 1.5rem;
+}
+
+.section-inner h3 {
+    font-size: 2rem;
+}
+
+.section-inner h2 {
+    font-size: 2.5rem;
+    font-weight: bold;
+}
+
+.section-inner h1 {
+    font-size: 3rem;
+    font-weight: bold;
+}
+
+/* Image on the right */
+#hero img {
+    max-width: 70%; /* 70% of its container width */
+    height: auto;
+    object-fit: contain;
+}
+
+@font-face {
+    font-family: 'Montserrat';
+    src: url('../fonts/montserrat/Montserrat-Regular.woff2') format('woff2'),
+         url('../fonts/montserrat/Montserrat-Regular.woff') format('woff');
+    font-weight: 400;
+}
