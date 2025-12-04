@@ -5,21 +5,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const dots = document.querySelectorAll('.dot');
     const scrollHint = document.querySelector('.scroll-hint');
     
-    // Function to update active dot
-    function updateActiveDot() {
-        const scrollPosition = scrollingContainer.scrollTop;
-        const iframeHeight = iframes[0].offsetHeight;
-        const currentIndex = Math.round(scrollPosition / iframeHeight);
-        
-        dots.forEach((dot, index) => {
-            if (index === currentIndex) {
-                dot.classList.add('active');
-            } else {
-                dot.classList.remove('active');
-            }
-        });
-    }
-    
     // Smooth scroll to iframe
     function scrollToIframe(targetId) {
         const targetIframe = document.getElementById(targetId);
@@ -98,25 +83,6 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         };
     });
-    
-    // Hide scroll hint on first interaction
-    function hideScrollHint() {
-        scrollHint.classList.add('hidden');
-        // Remove event listeners after hiding
-        scrollingContainer.removeEventListener('scroll', hideScrollHint);
-        window.removeEventListener('keydown', hideScrollHint);
-        window.removeEventListener('wheel', hideScrollHint);
-    }
-    
-    scrollingContainer.addEventListener('scroll', hideScrollHint);
-    window.addEventListener('keydown', hideScrollHint);
-    window.addEventListener('wheel', hideScrollHint);
-    
-    // Update active dot on scroll
-    scrollingContainer.addEventListener('scroll', updateActiveDot);
-    
-    // Initialize active dot
-    updateActiveDot();
     
     // Keyboard navigation
     window.addEventListener('keydown', function(e) {
