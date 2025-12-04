@@ -31,7 +31,6 @@ header li {
 
 section {
     height: 100vh;
-    border: 1px solid black;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -75,16 +74,18 @@ header a {
 /* Add everything below here */
 
 #hero {
-    background-image: linear-gradient(rgba(255,255,255,0.75),rgba(255,255,255,0.20)), url('../images/indexBackground.jpg');
-	text-shadow: black -1px -1px;
+    background-color: black;
 }
 
 #about {
-    background-image: linear-gradient(rgba(255,255,255,0.75),rgba(255,255,255,0.20)), url('../images/lightBlueBackground.jpg');
-	text-shadow: black -1px -1px;
+    background-color: black;
 }
 
 #contact {
-    background-image: linear-gradient(rgba(255,255,255,0.75),rgba(255,255,255,0.20)), url('../images/lightBlueBackground.jpg');
-	text-shadow: black -1px -1px;
+    background-color: black;
+}
+
+html, body {
+    overflow: hidden;
+    height: 100%;    
 }
