@@ -65,7 +65,7 @@ header a {
 }
 
 #about {
-    background-color: black;
+    background-color: #111111;
 }
 
 #contact {
@@ -73,6 +73,5 @@ header a {
 }
 
 html, body {
-    overflow: hidden;
     height: 100%;    
 }

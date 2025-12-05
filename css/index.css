@@ -29,6 +29,7 @@ body {
     display: flex;
     align-items: center;
     gap: 10px;
+    font-family: 'Roxie Rossa', sans-serif;
 }
 
 .nav-profile-img {
@@ -114,5 +115,11 @@ body {
     font-family: 'Montserrat';
     src: url('../fonts/montserrat/Montserrat-Regular.woff2') format('woff2'),
          url('../fonts/montserrat/Montserrat-Regular.woff') format('woff');
+    font-weight: 400;
+}
+
+@font-face {
+    font-family: 'Roxie Rossa';
+    src: url('../fonts/roxieRossa/Roxie\ rossa.ttf') format('truetype');
     font-weight: 400;
 }
