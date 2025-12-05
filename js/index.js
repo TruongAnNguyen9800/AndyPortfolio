@@ -3,9 +3,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const iframes = document.querySelectorAll('.page-iframe');
     const navLinks = document.querySelectorAll('.main-nav a');
     const dots = document.querySelectorAll('.dot');
-    const scrollHint = document.querySelector('.scroll-hint');
     
-    // Smooth scroll to iframe
     function scrollToIframe(targetId) {
         const targetIframe = document.getElementById(targetId);
         if (targetIframe) {
@@ -17,7 +15,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
     
-    // Navigation links click handler
     navLinks.forEach(link => {
         link.addEventListener('click', function(e) {
             e.preventDefault();
@@ -25,23 +22,13 @@ document.addEventListener('DOMContentLoaded', function() {
             scrollToIframe(targetId);
         });
     });
-    
-    // Dot navigation click handler
-    dots.forEach(dot => {
-        dot.addEventListener('click', function() {
-            const targetId = this.getAttribute('data-target');
-            scrollToIframe(targetId);
-        });
-    });
-    
-    // Hide headers in iframes when they load
+
     iframes.forEach(iframe => {
         iframe.onload = function() {
             try {
-                // Inject CSS to remove all scrollbars and headers
+
                 const style = `
                     <style>
-                        /* Remove ALL scrollbars */
                         html, body {
                             overflow: hidden !important;
                             height: 100% !important;
@@ -49,17 +36,14 @@ document.addEventListener('DOMContentLoaded', function() {
                             padding: 0 !important;
                         }
                         
-                        /* Hide headers and footers */
                         header, footer {
                             display: none !important;
                         }
                         
-                        /* Make sure content fills the iframe */
                         body > * {
                             margin: 0 !important;
                         }
                         
-                        /* Remove any padding/margin that might cause overflow */
                         main, section, div {
                             max-height: 100% !important;
                             overflow: hidden !important;
@@ -67,24 +51,20 @@ document.addEventListener('DOMContentLoaded', function() {
                     </style>
                 `;
                 
-                // Try to inject style
                 if (iframe.contentDocument && iframe.contentDocument.head) {
                     iframe.contentDocument.head.insertAdjacentHTML('beforeend', style);
                     
-                    // Also force the body to have no overflow
                     if (iframe.contentDocument.body) {
                         iframe.contentDocument.body.style.overflow = 'hidden';
                         iframe.contentDocument.body.style.height = '100%';
                     }
                 }
             } catch (e) {
-                // Cross-origin error, we'll handle it differently
                 console.log('Could not modify iframe content (cross-origin)');
             }
         };
     });
     
-    // Keyboard navigation
     window.addEventListener('keydown', function(e) {
         const iframeHeight = iframes[0].offsetHeight;
         const currentScroll = scrollingContainer.scrollTop;
@@ -117,7 +97,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
     
-    // Mouse wheel scroll with page snapping
     let isScrolling = false;
     scrollingContainer.addEventListener('wheel', function(e) {
         if (isScrolling) {
@@ -133,10 +112,8 @@ document.addEventListener('DOMContentLoaded', function() {
         
         let targetIndex;
         if (e.deltaY > 0) {
-            // Scrolling down
             targetIndex = Math.min(currentIndex + 1, iframes.length - 1);
         } else {
-            // Scrolling up
             targetIndex = Math.max(currentIndex - 1, 0);
         }
         
@@ -152,7 +129,6 @@ document.addEventListener('DOMContentLoaded', function() {
         e.preventDefault();
     }, { passive: false });
     
-    // Touch/swipe support for mobile
     let touchStartY = 0;
     scrollingContainer.addEventListener('touchstart', function(e) {
         touchStartY = e.touches[0].clientY;
@@ -162,17 +138,15 @@ document.addEventListener('DOMContentLoaded', function() {
         const touchEndY = e.changedTouches[0].clientY;
         const deltaY = touchStartY - touchEndY;
         
-        if (Math.abs(deltaY) > 50) { // Minimum swipe distance
+        if (Math.abs(deltaY) > 50) {
             const iframeHeight = iframes[0].offsetHeight;
             const currentScroll = scrollingContainer.scrollTop;
             const currentIndex = Math.round(currentScroll / iframeHeight);
             
             let targetIndex;
             if (deltaY > 0) {
-                // Swiped up
                 targetIndex = Math.min(currentIndex + 1, iframes.length - 1);
             } else {
-                // Swiped down
                 targetIndex = Math.max(currentIndex - 1, 0);
             }
             

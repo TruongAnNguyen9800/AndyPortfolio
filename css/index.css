@@ -24,7 +24,6 @@ body {
     border-bottom: 1px solid #ccc;
 }
 
-/* LEFT side */
 .nav-left {
     display: flex;
     align-items: center;
@@ -56,18 +55,16 @@ body {
 }
 
 
-/* Container for all iframes */
 #scrolling-container {
     position: absolute;
-    top: 70px; /* Height of navigation */
+    top: 70px; 
     bottom: 0;
     width: 100%;
-    overflow-y: scroll; /* Only this container scrolls */
+    overflow-y: scroll; 
     scroll-behavior: smooth;
-    -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+    -webkit-overflow-scrolling: touch; 
 }
 
-/* Remove scrollbar but keep functionality */
 #scrolling-container::-webkit-scrollbar {
     display: none;
 }
@@ -81,29 +78,12 @@ body {
     border-radius: 4px;
 }
 
-/* Each iframe takes full viewport height */
 .page-iframe {
     width: 100%;
-    height: calc(100vh - 70px); /* Full viewport minus nav height */
+    height: calc(100vh - 70px); 
     border: none;
     display: block;
-    overflow: hidden; /* Remove iframe internal scroll */
-}
-
-/* Scroll hint - disappears after first scroll */
-.scroll-hint {
-    position: fixed;
-    bottom: 30px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: rgba(0,0,0,0.7);
-    color: white;
-    padding: 10px 25px;
-    border-radius: 25px;
-    font-size: 14px;
-    z-index: 1001;
-    animation: pulse 2s infinite;
-    pointer-events: none;
+    overflow: hidden; 
 }
 
 @keyframes pulse {
