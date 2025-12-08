@@ -1,0 +1,86 @@
+/* Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+}
+
+/* ABOUT SECTION WRAPPER */
+#about {
+    width: 100%;
+    padding: 40px 0;
+}
+
+/* TOP ONNER SECTION */
+.section-onner {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.section-onner h1 {
+    font-size: 36px;
+    margin-bottom: 10px;
+    font-family: 'Roxie Rossa', cursive;
+}
+
+.section-onner h4 {
+    font-size: 18px;
+    color: #555;
+}
+
+/* BOTTOM LAYOUT */
+#about {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Container for gif + text */
+#about-content {
+    width: 90%;
+    max-width: 1000px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    margin-top: 20px;
+}
+
+/* GIF STYLE */
+#about img {
+    width: 100%;
+    max-width: 350px;
+    border-radius: 8px;
+    justify-self: center;
+}
+
+/* RIGHT INNER TEXT SECTION */
+.section-inner {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.section-inner h2 {
+    font-size: 28px;
+}
+
+.section-inner h3 {
+    font-size: 20px;
+    color: #666;
+    margin-bottom: 15px;
+}
+
+.section-inner p {
+    line-height: 1.6;
+    font-size: 16px;
+}
+
+@font-face {
+    font-family: 'Roxie Rossa';
+    src: url('../fonts/roxieRossa/Roxie\ rossa.ttf') format('truetype');
+    font-weight: 400;
+}
