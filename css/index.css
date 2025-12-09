@@ -5,14 +5,13 @@
 }
 
 html, body {
-    overflow: hidden; /* Prevent main page scrolling */
+    overflow: hidden; 
 }
 
 body {
     font-family: Arial, sans-serif;
 }
 
-/* Fixed Navigation */
 .main-nav {
     display: flex;
     justify-content: space-between;
@@ -29,6 +28,7 @@ body {
     align-items: center;
     gap: 10px;
     font-family: 'Roxie Rossa', sans-serif;
+    color: rgba(244, 82, 78);
 }
 
 .nav-profile-img {
@@ -42,7 +42,6 @@ body {
     font-weight: 600;
 }
 
-/* RIGHT side */
 .nav-right a {
     margin-left: 20px;
     text-decoration: none;

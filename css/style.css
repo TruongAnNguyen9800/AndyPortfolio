@@ -36,10 +36,10 @@ section {
     align-items: center;
     text-align: left;
     
-    background-size: cover; /* Add this line */
-    background-position: center center; /* Add this line */
-    background-repeat: no-repeat; /* Add this line */
-    background-attachment: fixed; /* Add this line */
+    background-size: cover; 
+    background-position: center center; 
+    background-repeat: no-repeat; 
+    background-attachment: fixed; 
 }
 
 #hero .profile-img {
@@ -58,8 +58,6 @@ header a {
     color: #483D8B;
 }
 
-/* Add everything below here */
-
 #hero {
     background-color: black;
 }
@@ -69,7 +67,7 @@ header a {
 }
 
 #contact {
-    background-color: black;
+    background-color: #0d0603;
 }
 
 html, body {
