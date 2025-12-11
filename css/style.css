@@ -70,6 +70,10 @@ header a {
     background-color: #0d0603;
 }
 
+#music {
+    background-color: #2C2C2C;
+}
+
 html, body {
     height: 100%;    
 }
