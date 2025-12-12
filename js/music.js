@@ -33,9 +33,7 @@ function loadPlaylist() {
         item.classList.add("track-item");
         item.innerHTML = `<h3>${track.title}</h3>`;
         item.onclick = () => playTrack(index);
-
         if (index === currentIndex) item.classList.add("playing");
-
         playlistDiv.appendChild(item);
     });
 }
@@ -43,6 +41,7 @@ function loadPlaylist() {
 function playTrack(index) {
     currentIndex = index;
     audio.src = playlist[index].file;
+    audio.load();
     audio.play();
     updateMiniPlayer();
     updatePlaylistUI();
@@ -68,7 +67,10 @@ audio.ontimeupdate = () => {
     mpTime.textContent = `${formatTime(audio.currentTime)} / ${formatTime(audio.duration || 0)}`;
 };
 
-document.getElementById("playPauseBtn").onclick = () => {
+playPauseBtn.onclick = async () => {
+    if (audioCtx.state === "suspended") {
+        await audioCtx.resume();
+    }
     if (audio.paused) audio.play();
     else audio.pause();
 };
@@ -98,16 +100,11 @@ audio.onplay = () => {
 
 function animateBars() {
     requestAnimationFrame(animateBars);
-
     analyser.getByteFrequencyData(dataArray);
-
     const bars = document.querySelectorAll(".bar");
-
     for (let i = 0; i < bars.length; i++) {
-        let value = dataArray[i * 2];  
-
+        let value = dataArray[i * 2];
         let height = (value / 255) * 30 + 5;
-
         bars[i].style.height = height + "px";
     }
 }
