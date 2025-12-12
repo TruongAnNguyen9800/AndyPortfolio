@@ -5,7 +5,20 @@ const playlist = [
 ];
 
 let currentIndex = 0;
-let audio = new Audio(playlist[currentIndex].file);
+const audio = new Audio(playlist[currentIndex].file);
+audio.crossOrigin = "anonymous";
+
+const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+const source = audioCtx.createMediaElementSource(audio);
+
+const analyser = audioCtx.createAnalyser();
+analyser.fftSize = 32;
+
+const bufferLength = analyser.frequencyBinCount;
+const dataArray = new Uint8Array(bufferLength);
+
+source.connect(analyser);
+analyser.connect(audioCtx.destination);
 
 const playlistDiv = document.getElementById("playlist");
 
@@ -83,5 +96,22 @@ audio.onplay = () => {
     document.querySelectorAll(".bar").forEach(b => b.style.animationPlayState = "running");
 };
 
+function animateBars() {
+    requestAnimationFrame(animateBars);
+
+    analyser.getByteFrequencyData(dataArray);
+
+    const bars = document.querySelectorAll(".bar");
+
+    for (let i = 0; i < bars.length; i++) {
+        let value = dataArray[i * 2];  
+
+        let height = (value / 255) * 30 + 5;
+
+        bars[i].style.height = height + "px";
+    }
+}
+
 loadPlaylist();
 updateMiniPlayer();
+animateBars();
