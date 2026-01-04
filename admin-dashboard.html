@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feedback Admin Dashboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+
+        .header-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .stats {
+            display: flex;
+            gap: 20px;
+        }
+
+        .stat-box {
+            background: #f8f9fa;
+            padding: 15px 25px;
+            border-radius: 8px;
+            border-left: 4px solid #218085;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: #7f8c8d;
+            text-transform: uppercase;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .stat-value {
+            font-size: 28px;
+            font-weight: bold;
+            color: #218085;
+        }
+
+        .controls {
+            display: flex;
+            gap: 10px;
+        }
+
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: #218085;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #1a6670;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(33, 128, 133, 0.3);
+        }
+
+        .btn-danger {
+            background: #c0152f;
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #a01127;
+        }
+
+        .btn-secondary {
+            background: #e0e0e0;
+            color: #2c3e50;
+        }
+
+        .btn-secondary:hover {
+            background: #d0d0d0;
+        }
+
+        .filters {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .filter-group {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        select {
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 14px;
+            background: white;
+            cursor: pointer;
+        }
+
+        .feedback-grid {
+            display: grid;
+            gap: 20px;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+        }
+
+        .feedback-card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            border-top: 4px solid #218085;
+        }
+
+        .feedback-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+        }
+
+        .feedback-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 12px;
+        }
+
+        .feedback-name {
+            font-weight: 600;
+            color: #2c3e50;
+            font-size: 16px;
+        }
+
+        .feedback-email {
+            font-size: 12px;
+            color: #7f8c8d;
+        }
+
+        .feedback-category {
+            display: inline-block;
+            padding: 4px 10px;
+            background: rgba(33, 128, 133, 0.1);
+            color: #218085;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .feedback-message {
+            color: #34495e;
+            line-height: 1.6;
+            margin: 12px 0;
+            font-size: 14px;
+        }
+
+        .feedback-timestamp {
+            font-size: 12px;
+            color: #95a5a6;
+            border-top: 1px solid #ecf0f1;
+            padding-top: 12px;
+            margin-top: 12px;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #7f8c8d;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #7f8c8d;
+        }
+
+        .error {
+            background: #ffebee;
+            border: 1px solid #ef5350;
+            color: #c62828;
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .success {
+            background: #e8f5e9;
+            border: 1px solid #81c784;
+            color: #2e7d32;
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .status-syncing {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 12px;
+            color: #218085;
+        }
+
+        .spinner {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border: 2px solid rgba(33, 128, 133, 0.3);
+            border-top-color: #218085;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        @media (max-width: 768px) {
+            .feedback-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .header-info {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .filters {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .filter-group {
+                flex-direction: column;
+            }
+
+            select {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="header-info">
+                <div>
+                    <h1>📊 Feedback Dashboard</h1>
+                    <p style="color: #7f8c8d; margin-top: 5px;">View and manage all user feedback</p>
+                </div>
+                <div class="stats">
+                    <div class="stat-box">
+                        <div class="stat-label">Total Feedbacks</div>
+                        <div class="stat-value" id="totalCount">0</div>
+                    </div>
+                </div>
+                <div class="controls">
+                    <button class="btn-secondary" onclick="exportToCSV()">📥 Export CSV</button>
+                    <button class="btn-danger" onclick="confirmDeleteAll()">🗑️ Clear All</button>
+                </div>
+            </div>
+        </header>
+
+        <div id="message"></div>
+
+        <div class="filters">
+            <div class="filter-group">
+                <label for="categoryFilter">Filter by Category:</label>
+                <select id="categoryFilter" onchange="filterFeedback()">
+                    <option value="">All Categories</option>
+                    <option value="bug">Bug Report</option>
+                    <option value="feature">Feature Request</option>
+                    <option value="general">General Feedback</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label for="sortOrder">Sort by:</label>
+                <select id="sortOrder" onchange="filterFeedback()">
+                    <option value="newest">Newest First</option>
+                    <option value="oldest">Oldest First</option>
+                </select>
+            </div>
+            <div style="margin-left: auto;">
+                <div class="status-syncing" id="syncStatus">
+                    <span class="spinner"></span>
+                    <span>Loading feedbacks...</span>
+                </div>
+            </div>
+        </div>
+
+        <div id="feedbackContainer" class="feedback-grid">
+            <div class="loading">Loading feedbacks...</div>
+        </div>
+    </div>
+
+    <!-- Firebase SDK - Load FIRST -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-database.js"></script>
+
+    <!-- Initialize Firebase BEFORE admin script -->
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyAPI-B0yGFbgqz1LSIMFRGljVmEAScK2Zk",
+            authDomain: "feedback-webpage-1.firebaseapp.com",
+            databaseURL: "https://feedback-webpage-1-default-rtdb.firebaseio.com",
+            projectId: "feedback-webpage-1",
+            storageBucket: "feedback-webpage-1.firebasestorage.app",
+            messagingSenderId: "579958683010",
+            appId: "1:579958683010:web:ff17c8d1e89ac2f481cb9b",
+            measurementId: "G-2H9N3PV6EP"
+        };
+
+        firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+        console.log('✓ Firebase initialized successfully');
+    </script>
+
+    <!-- Admin dashboard script AFTER Firebase is loaded -->
+    <script>
+        let allFeedbacks = [];
+
+        // Load feedbacks on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            loadFeedbacks();
+        });
+
+        function loadFeedbacks() {
+            const container = document.getElementById('feedbackContainer');
+            const syncStatus = document.getElementById('syncStatus');
+
+            const feedbacksRef = database.ref('feedbacks');
+
+            feedbacksRef.on('value', (snapshot) => {
+                allFeedbacks = [];
+                snapshot.forEach((child) => {
+                    allFeedbacks.push(child.val());
+                });
+
+                document.getElementById('totalCount').textContent = allFeedbacks.length;
+                displayFeedbacks();
+
+                syncStatus.innerHTML = '✓ <span style="color: #27ae60;">Synced</span>';
+                syncStatus.style.color = '#27ae60';
+
+            }, (error) => {
+                console.error('Error loading feedbacks:', error);
+                container.innerHTML = '<div class="error">❌ Failed to load feedbacks. Check your Firebase config.</div>';
+                syncStatus.innerHTML = '✗ <span style="color: #c0152f;">Connection Error</span>';
+            });
+        }
+
+        function displayFeedbacks() {
+            const container = document.getElementById('feedbackContainer');
+            const categoryFilter = document.getElementById('categoryFilter').value;
+            const sortOrder = document.getElementById('sortOrder').value;
+
+            let filtered = allFeedbacks;
+
+            if (categoryFilter) {
+                filtered = filtered.filter(f => f.category === categoryFilter);
+            }
+
+            // Sort
+            filtered.sort((a, b) => {
+                const dateA = new Date(a.timestamp);
+                const dateB = new Date(b.timestamp);
+                return sortOrder === 'newest' ? dateB - dateA : dateA - dateB;
+            });
+
+            if (filtered.length === 0) {
+                container.innerHTML = '<div style="grid-column: 1 / -1;"><div class="empty-state"><p>📭 No feedbacks found</p></div></div>';
+                return;
+            }
+
+            container.innerHTML = filtered.map(feedback => `
+                <div class="feedback-card">
+                    <div class="feedback-header">
+                        <div>
+                            <div class="feedback-name">${escapeHtml(feedback.name)}</div>
+                            <div class="feedback-email">${escapeHtml(feedback.email)}</div>
+                        </div>
+                        <span class="feedback-category">${getCategoryLabel(feedback.category)}</span>
+                    </div>
+                    <p class="feedback-message">${escapeHtml(feedback.message)}</p>
+                    <div class="feedback-timestamp">📅 ${formatDateTime(feedback.timestamp)}</div>
+                </div>
+            `).join('');
+        }
+
+        function filterFeedback() {
+            displayFeedbacks();
+        }
+
+        function getCategoryLabel(category) {
+            const labels = {
+                'bug': 'Bug Report',
+                'feature': 'Feature Request',
+                'general': 'General',
+                'other': 'Other'
+            };
+            return labels[category] || category;
+        }
+
+        function formatDateTime(isoDate) {
+            const date = new Date(isoDate);
+            return date.toLocaleString('en-US', {
+                year: 'numeric',
+                month: 'short',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+        }
+
+        function escapeHtml(text) {
+            const map = {
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                '"': '&quot;',
+                "'": '&#039;'
+            };
+            return text.replace(/[&<>"']/g, m => map[m]);
+        }
+
+        function exportToCSV() {
+            if (allFeedbacks.length === 0) {
+                showMessage('No feedbacks to export', 'error');
+                return;
+            }
+
+            const headers = ['Name', 'Email', 'Category', 'Message', 'Date'];
+            const rows = allFeedbacks.map(f => [
+                f.name,
+                f.email,
+                getCategoryLabel(f.category),
+                f.message,
+                formatDateTime(f.timestamp)
+            ]);
+
+            let csv = headers.join(',') + '\n';
+            rows.forEach(row => {
+                csv += row.map(cell => `"${cell.replace(/"/g, '""')}"`).join(',') + '\n';
+            });
+
+            const blob = new Blob([csv], { type: 'text/csv' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `feedbacks_${new Date().toISOString().split('T')[0]}.csv`;
+            a.click();
+
+            showMessage('✓ Feedbacks exported successfully', 'success');
+        }
+
+        function confirmDeleteAll() {
+            if (confirm('Are you sure? This will delete ALL feedbacks permanently.')) {
+                deleteAllFeedbacks();
+            }
+        }
+
+        function deleteAllFeedbacks() {
+            const feedbacksRef = database.ref('feedbacks');
+            feedbacksRef.remove().then(() => {
+                showMessage('✓ All feedbacks deleted', 'success');
+                allFeedbacks = [];
+                displayFeedbacks();
+            }).catch(error => {
+                console.error('Error deleting feedbacks:', error);
+                showMessage('❌ Failed to delete feedbacks', 'error');
+            });
+        }
+
+        function showMessage(text, type) {
+            const messageDiv = document.getElementById('message');
+            messageDiv.innerHTML = `<div class="${type}">${text}</div>`;
+            setTimeout(() => {
+                messageDiv.innerHTML = '';
+            }, 3000);
+        }
+    </script>
+</body>
+</html>

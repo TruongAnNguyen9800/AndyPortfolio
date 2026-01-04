@@ -10,35 +10,115 @@ body {
 
 #music {
     width: 100%;
-    padding: 40px 0;
+    padding-top: 80px;      
+    padding-bottom: 120px; 
     display: flex;
     flex-direction: column;
     align-items: center;
+    gap: 10px;
+    background-color: #2C2C2C;
 }
+
+/* 2 headers */
 
 .section-onner {
     text-align: center;
-    margin-bottom: 40px;
+    margin-bottom: 6px;
 }
 
 .section-onner h1 {
     font-size: 36px;
-    margin-bottom: 10px;
+    margin-bottom: 4px;
     font-family: 'Roxie Rossa', cursive;
     color: rgba(244, 82, 78);
 }
 
 .section-onner h4 {
     font-size: 18px;
+    margin-bottom: 6px;
     color: #5e5854;
 }
+
+/* Dropdown music list */
+
+.select-wrapper {
+    margin: 0 0 20px;
+    text-align: center;
+}
+
+.select-wrapper label {
+    display: block;
+    margin-bottom: 4px;
+    font-size: 16px;
+    color: #5e5854;
+    font-weight: 600;
+}
+
+#music-playlist {
+    min-width: 260px;
+    max-width: 320px;
+    padding: 10px 38px 10px 12px;
+    border-radius: 999px;
+    border: 2px solid rgba(244, 82, 78);
+    background-color: #f7f7f7;
+    color: #333;
+    font-size: 15px;
+    font-family: 'Montserrat', sans-serif;
+    cursor: pointer;
+
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    background-size: 10px 10px;
+
+    background-image:
+        linear-gradient(45deg, transparent 50%, rgba(244,82,78) 50%),
+        linear-gradient(135deg, rgba(244,82,78) 50%, transparent 50%);
+}
+
+#music-playlist:hover {
+    background-color: #ececec;
+}
+
+#music-playlist:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(244, 82, 78, 0.35);
+}
+
+#music-playlist::-ms-expand {
+    display: none;
+}
+
+#music-playlist option {
+    background-color: #ffffff;
+    color: #333333;
+}
+
+/* Actual playlist */
 
 #playlist {
     width: 90%;
     max-width: 700px;
+    margin-top: 20px;
     display: flex;
     flex-direction: column;
     gap: 20px;
+
+    max-height: 150px;
+    overflow-y: auto;
+    padding-right: 6px;
+}
+
+#playlist::-webkit-scrollbar {
+    width: 6px;
+}
+
+#playlist::-webkit-scrollbar-thumb {
+    background: rgba(244, 82, 78, 0.6);
+    border-radius: 10px;
 }
 
 .track-item {
@@ -58,6 +138,8 @@ body {
 .track-item.playing {
     background: rgba(244,82,78,0.12);
 }
+
+/* Music player  */
 
 #mini-player {
     position: fixed;
@@ -80,10 +162,12 @@ body {
 #mp-info {
     width: 40%;
 }
+
 #mp-title {
     font-size: 18px;
     font-weight: 600;
 }
+
 #mp-time {
     font-size: 14px;
     opacity: 0.8;
@@ -98,6 +182,8 @@ body {
     border-radius: 8px;
     cursor: pointer;
 }
+
+/* Music wave bars*/
 
 #mp-wave {
     display: flex;
@@ -118,15 +204,7 @@ body {
 .bar:nth-child(4) { animation-delay: .3s; }
 .bar:nth-child(5) { animation-delay: .4s; }
 
-.reveal {
-    opacity: 0;
-    transform: translateY(30px);
-    transition: all 0.6s ease-out;
-}
-.reveal.active {
-    opacity: 1;
-    transform: translateY(0);
-}
+/* Image buttons */
 
 .img-btn {
     background: none;
@@ -149,6 +227,21 @@ body {
     transform: scale(0.9);
 }
 
+/* Reveal effect */
+
+.reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.6s ease-out;
+}
+
+.reveal.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Fonts */
+
 @font-face {
     font-family: 'Montserrat';
     src: url('../fonts/montserrat/Montserrat-Regular.woff2') format('woff2'),
@@ -158,6 +251,6 @@ body {
 
 @font-face {
     font-family: 'Roxie Rossa';
-    src: url('../fonts/roxieRossa/Roxie\ rossa.ttf') format('truetype');
+    src: url('../fonts/roxieRossa/Roxie rossa.ttf') format('truetype');
     font-weight: 400;
 }

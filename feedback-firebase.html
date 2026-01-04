@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feedback</title>
+    <link rel="stylesheet" href="css/feedback.css">
+    <style>
+        .loading {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border: 2px solid rgba(33, 128, 141, 0.3);
+            border-top-color: var(--color-primary, #218085);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .sync-status {
+            font-size: 12px;
+            color: var(--color-text-secondary, #626c71);
+            margin-top: 4px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .sync-status.synced {
+            color: var(--color-success, #208085);
+        }
+
+        .error-message {
+            background-color: rgba(192, 21, 47, 0.1);
+            color: #c0152f;
+            padding: 12px 16px;
+            border-radius: 8px;
+            margin-bottom: 16px;
+            border: 1px solid rgba(192, 21, 47, 0.2);
+            display: none;
+        }
+
+        .error-message.show {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div id="feedback">
+        <div class="section-onner reveal">
+            <h1>Feedback</h1>
+            <h4>Share your thoughts and suggestions</h4>
+        </div>
+
+        <div id="errorMessage" class="error-message"></div>
+
+        <form id="feedbackForm" class="feedback-form reveal" novalidate>
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" id="name" name="name" required placeholder="Your name">
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" required placeholder="your@email.com">
+            </div>
+
+            <div class="form-group">
+                <label for="category">Category</label>
+                <select id="category" name="category" required>
+                    <option value="">Select a category</option>
+                    <option value="bug">Bug Report</option>
+                    <option value="feature">Feature Request</option>
+                    <option value="general">General Feedback</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="message">Message</label>
+                <textarea id="message" name="message" required placeholder="Your feedback here..."></textarea>
+            </div>
+
+            <button type="submit" class="submit-btn" id="submitBtn">Submit Feedback</button>
+        </form>
+
+        <div id="feedbackList" class="feedback-list reveal"></div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
+        import {
+            getDatabase,
+            ref,
+            set,
+            onValue
+        } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyAPI-B0yGFbgqz1LSIMFRGljVmEAScK2Zk",
+            authDomain: "feedback-webpage-1.firebaseapp.com",
+            databaseURL: "https://feedback-webpage-1-default-rtdb.firebaseio.com",
+            projectId: "feedback-webpage-1",
+            storageBucket: "feedback-webpage-1.firebasestorage.app",
+            messagingSenderId: "579958683010",
+            appId: "1:579958683010:web:ff17c8d1e89ac2f481cb9b",
+            measurementId: "G-2H9N3PV6EP"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+
+        window.firebaseDb = db;
+        window.firebaseRef = ref;
+        window.firebaseSet = set;
+        window.firebaseOnValue = onValue;
+
+        console.log("Firebase v10 initialized (module)");
+    </script>
+
+    <script src="js/effects.js"></script>
+
+    <script src="js/feedback-firebase.js"></script>
+</body>
+</html>

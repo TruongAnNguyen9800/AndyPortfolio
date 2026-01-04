@@ -15,6 +15,10 @@ document.addEventListener('DOMContentLoaded', function() {
   const gPlayPauseBtn = document.getElementById('gplayPauseBtn');
   const gNextBtn = document.getElementById('gnextBtn');
 
+  // Dropdown menu elements
+  const projectsToggle = document.getElementById('projects-toggle');
+  const projectsMenu = document.getElementById('projects-menu');
+
   function scrollToIframe(targetId) {
     const targetIframe = document.getElementById(targetId);
     if (targetIframe) {
@@ -48,9 +52,13 @@ document.addEventListener('DOMContentLoaded', function() {
           body > * {
             margin: 0 !important;
           }
-          main, section, div {
+          main, section {
             max-height: 100% !important;
             overflow: hidden !important;
+          }
+
+          #playlist {
+            overflow-y: auto !important;
           }
           </style>
         `;
@@ -69,7 +77,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
   window.addEventListener('keydown', function(e) {
     const iframeHeight = iframes[0].offsetHeight;
-    const currentScroll = scrollingContainer.scrollTop;
     const maxScroll = scrollingContainer.scrollHeight - scrollingContainer.clientHeight;
 
     if (e.key === 'ArrowDown' || e.key === 'PageDown') {
@@ -139,7 +146,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   }, { passive: true });
 
-  // === GLOBAL MINI PLAYER - PERFECT SYNC WITH MUSIC.HTML ===
+  //  Global Mini Player Message Handling
   
   window.addEventListener('message', function(event) {
     if (event.source !== musicIframe.contentWindow) return;
@@ -162,11 +169,9 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     }
 
-    // IDENTICAL ANIMATION - uses EXACT same frequency data as music.html
     if (data.type === 'music-frequency-data') {
       if (data.dataArray && data.dataArray.length >= 10) {
         gBars.forEach((bar, i) => {
-          // EXACT SAME MATH as music.html local bars
           let value = data.dataArray[i * 2] || 0;
           let height = (value / 255) * 30 + 5;
           bar.style.height = height + 'px';
@@ -184,4 +189,19 @@ document.addEventListener('DOMContentLoaded', function() {
   gPrevBtn.addEventListener('click', () => sendMusicCommand('prev'));
   gPlayPauseBtn.addEventListener('click', () => sendMusicCommand('toggle-play'));
   gNextBtn.addEventListener('click', () => sendMusicCommand('next'));
+  
+  // Dropdown Menu Handling
+  
+  if (projectsToggle && projectsMenu) {
+    projectsToggle.addEventListener('click', function (e) {
+      e.stopPropagation();
+      projectsMenu.classList.toggle('show');
+    });
+
+    document.addEventListener('click', function (e) {
+      if (!projectsMenu.contains(e.target) && e.target !== projectsToggle) {
+        projectsMenu.classList.remove('show');
+      }
+    });
+  }
 });

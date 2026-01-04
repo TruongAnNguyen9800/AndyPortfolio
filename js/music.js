@@ -1,80 +1,100 @@
-const playlist = [
-  { title: "Testify", file: "music/Testify.mp3" },
-  { title: "Grievous Lady", file: "music/GrievousLady.mp3" },
-  { title: "FNAF 1 Song(by TLT)", file: "music/FNAF1Song.mp3" }
-];
+/* Playlists */
 
+const playlists = {
+  rhythm: [
+    { title: "Testify", file: "music/Testify.mp3" },
+    { title: "Grievous Lady", file: "music/GrievousLady.mp3" },
+    { title: "Tempestissmo", file: "music/Tempestissimo.mp3" }
+  ],
+  games: [
+    { title: "Game OST 1", file: "music/game1.mp3" }
+  ],
+  fan: [
+    { title: "FNAF 1 Song (by TLT)", file: "music/FNAF1Song.mp3" }
+  ],
+  anime: [],
+  other: []
+};
+
+/* State */
+
+let playlist = [];
 let currentIndex = 0;
 
-const audio = new Audio(playlist[currentIndex].file);
+/* Audio Setup */
+
+const audio = new Audio();
 audio.crossOrigin = "anonymous";
 
 const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 const source = audioCtx.createMediaElementSource(audio);
 const analyser = audioCtx.createAnalyser();
 analyser.fftSize = 32;
+
 const bufferLength = analyser.frequencyBinCount;
 const dataArray = new Uint8Array(bufferLength);
 
 source.connect(analyser);
 analyser.connect(audioCtx.destination);
 
+/* DOM Elements */
+
 const playlistDiv = document.getElementById("playlist");
 const mpTitle = document.getElementById("mp-title");
 const mpTime = document.getElementById("mp-time");
 const playPauseBtn = document.getElementById("playPauseBtn");
+const playlistSelect = document.getElementById("music-playlist");
 
-// Sends now-playing info to parent so global bar appears with title
+/* Reveal Trigger */
+function triggerReveal(element) {
+  if (!element) return;
+
+  element.classList.remove("active");
+  void element.offsetWidth;
+  element.classList.add("active");
+}
+
+/* Parent Communication */
+
 function notifyNowPlaying() {
-  if (window.parent && window.parent !== window) {
-    window.parent.postMessage({
-      type: "music-now-playing", 
-      title: playlist[currentIndex].title
-    }, "*");
-  }
+  window.parent?.postMessage({
+    type: "music-now-playing",
+    title: playlist[currentIndex]?.title || ""
+  }, "*");
 }
 
-// Sends formatted time string to parent for global bar
 function notifyTimeUpdate(textTime) {
-  if (window.parent && window.parent !== window) {
-    window.parent.postMessage({
-      type: "music-time-update", 
-      textTime
-    }, "*");
-  }
+  window.parent?.postMessage({
+    type: "music-time-update",
+    textTime
+  }, "*");
 }
 
-// Sends EXACT frequency data to parent for identical bar animation
 function notifyFrequencyData() {
-  if (window.parent && window.parent !== window) {
-    analyser.getByteFrequencyData(dataArray);
-    window.parent.postMessage({
-      type: "music-frequency-data", 
-      dataArray: Array.from(dataArray)
-    }, "*");
-  }
+  analyser.getByteFrequencyData(dataArray);
+  window.parent?.postMessage({
+    type: "music-frequency-data",
+    dataArray: Array.from(dataArray)
+  }, "*");
 }
+
+/* Playlist UI */
 
 function loadPlaylist() {
   playlistDiv.innerHTML = "";
+
   playlist.forEach((track, index) => {
     const item = document.createElement("div");
-    item.classList.add("track-item");
+    item.className = "track-item reveal";
     item.innerHTML = `<h3>${track.title}</h3>`;
     item.onclick = () => playTrack(index);
-    if (index === currentIndex) item.classList.add("playing");
-    playlistDiv.appendChild(item);
-  });
-}
 
-function playTrack(index) {
-  currentIndex = index;
-  audio.src = playlist[index].file;
-  audio.load();
-  audio.play();
-  updateMiniPlayer();
-  updatePlaylistUI();
-  notifyNowPlaying();
+    playlistDiv.appendChild(item);
+
+    requestAnimationFrame(() => {
+      item.classList.add("active");
+    });
+  });
 }
 
 function updatePlaylistUI() {
@@ -83,13 +103,28 @@ function updatePlaylistUI() {
   });
 }
 
-function updateMiniPlayer() {
-  mpTitle.textContent = playlist[currentIndex].title;
+/* Playback */
+
+async function playTrack(index) {
+  currentIndex = index;
+
+  if (audioCtx.state === "suspended") {
+    await audioCtx.resume();
+  }
+
+  audio.src = playlist[index].file;
+  await audio.play();
+
+  mpTitle.textContent = playlist[index].title;
+  updatePlaylistUI();
+  notifyNowPlaying();
 }
 
+/* Time */
+
 function formatTime(sec) {
-  let m = Math.floor(sec / 60);
-  let s = Math.floor(sec % 60);
+  const m = Math.floor(sec / 60);
+  const s = Math.floor(sec % 60);
   return `${m}:${s < 10 ? "0" : ""}${s}`;
 }
 
@@ -99,80 +134,52 @@ audio.ontimeupdate = () => {
   notifyTimeUpdate(text);
 };
 
-playPauseBtn.onclick = async () => {
-  if (audioCtx.state === "suspended") {
-    await audioCtx.resume();
-  }
-  if (audio.paused) {
-    audio.play();
-    notifyNowPlaying();
-  } else {
-    audio.pause();
-  }
+/* Controls */
+
+playlistSelect.onchange = () => {
+  playlist = playlists[playlistSelect.value] || [];
+  currentIndex = 0;
+
+  audio.pause();
+  audio.src = "";
+  mpTitle.textContent = "";
+  mpTime.textContent = "00:00 / 00:00";
+
+  loadPlaylist();
+
+  const playlistEl = document.getElementById("playlist");
+  triggerReveal(playlistEl);
 };
 
-// Connect LOCAL music page buttons
+playPauseBtn.onclick = async () => {
+  if (!playlist.length) return;
+  if (audioCtx.state === "suspended") await audioCtx.resume();
+  audio.paused ? audio.play() : audio.pause();
+};
+
 document.getElementById("nextBtn").onclick = () => {
-  currentIndex = (currentIndex + 1) % playlist.length;
-  playTrack(currentIndex);
+  playTrack((currentIndex + 1) % playlist.length);
 };
 
 document.getElementById("prevBtn").onclick = () => {
-  currentIndex = (currentIndex - 1 + playlist.length) % playlist.length;
-  playTrack(currentIndex);
+  playTrack((currentIndex - 1 + playlist.length) % playlist.length);
 };
 
 audio.onended = () => {
-  currentIndex = (currentIndex + 1) % playlist.length;
-  playTrack(currentIndex);
+  playTrack((currentIndex + 1) % playlist.length);
 };
 
-// IDENTICAL ANIMATION LOOP - local bars + sends data to global bars
+/*Wave Animation */
+
 function animateBars() {
   requestAnimationFrame(animateBars);
-  
   analyser.getByteFrequencyData(dataArray);
-  
-  // LOCAL bars in music.html - ORIGINAL exact logic
-  const localBars = document.querySelectorAll(".bar");
-  for (let i = 0; i < localBars.length; i++) {
-    let value = dataArray[i * 2];
-    let height = (value / 255) * 30 + 5;
-    localBars[i].style.height = height + "px";
-  }
-  
-  // Send EXACT SAME DATA to parent for global bars
+
+  document.querySelectorAll(".bar").forEach((bar, i) => {
+    bar.style.height = (dataArray[i * 2] / 255) * 30 + 5 + "px";
+  });
+
   notifyFrequencyData();
 }
 
-// Listen for control commands from global mini player
-window.addEventListener("message", function(event) {
-  if (event.source !== window.parent) return;
-  
-  const data = event.data;
-  if (!data || data.type !== "music-command") return;
-
-  if (data.command === "prev") {
-    currentIndex = (currentIndex - 1 + playlist.length) % playlist.length;
-    playTrack(currentIndex);
-  }
-  if (data.command === "next") {
-    currentIndex = (currentIndex + 1) % playlist.length;
-    playTrack(currentIndex);
-  }
-  if (data.command === "toggle-play") {
-    if (audio.paused) {
-      if (audioCtx.state === "suspended") {
-        audioCtx.resume();
-      }
-      audio.play();
-      notifyNowPlaying();
-    } else {
-      audio.pause();
-    }
-  }
-});
-
-loadPlaylist();
-updateMiniPlayer();
 animateBars();

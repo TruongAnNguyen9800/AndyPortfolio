@@ -1,8 +1,12 @@
+/* Reset */
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
+
+/* Base */
 
 body {
     font-family: 'Montserrat', sans-serif;
@@ -10,71 +14,15 @@ body {
     color: #fff;
 }
 
+/* Hero Layout */
+
 #hero {
-    display: flex;
-    justify-content: space-between; 
-    align-items: center;
     height: 100vh;
-    padding: 0 50px; 
-}
+    padding: 0 50px;
 
-.section-inner {
     display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: 5px; 
-    max-width: 50%; 
-}
-
-.section-inner h4 {
-    font-size: 1.5rem;
-}
-
-.section-inner h3 {
-    font-size: 2rem;
-}
-
-.section-inner h2 {
-    font-size: 2.5rem;
-    font-weight: bold;
-}
-
-.section-inner h1 {
-    font-size: 3rem;
-    font-weight: bold;
-}
-
-.resume-glass-btn {
-    display: inline-flex;
-    width: fit-content;         
-    align-items: center;           
-    justify-content: center;       
-
-    margin-top: 25px;
-    padding: 14px 28px;            
-    font-size: 18px;
-    color: white;
-    text-decoration: none;
-    border-radius: 12px;
-
-    background: rgba(255, 255, 255, 0.15);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.35);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
-
-    transition: all 0.25s ease;
-}
-
-.resume-glass-btn:hover {
-    background: rgba(255, 255, 255, 0.25);
-    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.35);
-    transform: translateY(-2px);
-}
-
-.resume-glass-btn:active {
-    transform: translateY(0);
-    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.2);
+    justify-content: space-between;
+    align-items: center;
 }
 
 #hero img {
@@ -82,6 +30,60 @@ body {
     height: auto;
     object-fit: contain;
 }
+
+/* Text Container*/
+
+.section-inner {
+    max-width: 50%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+}
+
+.section-inner h4 { font-size: 1.5rem; }
+.section-inner h3 { font-size: 2rem; }
+.section-inner h2 { font-size: 2.5rem; font-weight: bold; }
+.section-inner h1 { font-size: 3rem; font-weight: bold; }
+
+/*Resume Button */
+
+.resume-glass-btn {
+    margin-top: 25px;
+    padding: 14px 28px;
+
+    display: inline-flex;
+    width: fit-content;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 18px;
+    color: white;
+    text-decoration: none;
+    border-radius: 12px;
+
+    background: rgba(255,255,255,0.15);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.35);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+
+    transition: all 0.25s ease;
+}
+
+.resume-glass-btn:hover {
+    background: rgba(255,255,255,0.25);
+    box-shadow: 0 6px 25px rgba(0,0,0,0.35);
+    transform: translateY(-2px);
+}
+
+.resume-glass-btn:active {
+    transform: translateY(0);
+    box-shadow: 0 3px 12px rgba(0,0,0,0.2);
+}
+
+/* Fonts */
 
 @font-face {
     font-family: 'Montserrat';

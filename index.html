@@ -14,25 +14,35 @@
       <a href="#home">Home</a>
       <a href="#about">About</a>
       <a href="#contact">Contact</a>
-      <a href="#music">Music</a>
+      
+    <div class="nav-dropdown">
+      <a class="nav-link" id="projects-toggle">Projects</a>
+      <div class="dropdown-menu" id="projects-menu">
+        <a href="#music">Music Player</a>
+        <a href="#todo">To-Do List</a>
+        <a href="#games">Games</a>
+        <a href="#feedback">Feedback</a>
+        <a href="#updates">Update Notes</a> 
+      </div>
     </div>
-  </nav>
+  </div>
+</nav>
 
   <div id="scrolling-container">
     <iframe id="home" src="main.html" class="page-iframe"></iframe>
     <iframe id="about" src="about.html" class="page-iframe"></iframe>
     <iframe id="contact" src="contact.html" class="page-iframe"></iframe>
     <iframe id="music" src="music.html" class="page-iframe"></iframe>
+    <iframe id="feedback" src="feedback-firebase.html" class="page-iframe"></iframe>
   </div>
 
-  <!-- Global mini player bar shown on all pages once music has started -->
   <div id="global-mini-player" class="hidden-mini-player">
-    <!-- Shows current track title -->
+    
     <div id="gmp-info">
       <p id="gmp-title">—</p>
       <p id="gmp-time">00:00 / 00:00</p>
     </div>
-    <!-- Simple visualizer bars -->
+
     <div id="gmp-wave">
       <div class="gbar"></div>
       <div class="gbar"></div>
@@ -40,7 +50,7 @@
       <div class="gbar"></div>
       <div class="gbar"></div>
     </div>
-    <!-- Transport controls that forward actions to music iframe -->
+  
     <div id="gmp-controls">
       <button id="gprevBtn" class="g-img-btn">
         <img src="icons/previous.png" alt="Previous">
@@ -53,7 +63,6 @@
       </button>
     </div>
   </div>
-  <!-- End global mini player -->
 
   <script src="js/index.js"></script>
 </body>

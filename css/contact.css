@@ -1,14 +1,4 @@
-#contact .section-inner {
-    max-width: 900px;
-    margin: 0 auto;
-    padding: 40px 20px;
-}
-
-#personal-contact,
-#work-contact {
-    flex: 1;
-    min-width: 350px;
-}
+/* Contact Section Layout */
 
 #contact {
     display: flex;
@@ -16,15 +6,50 @@
 }
 
 #contact .section-inner {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 40px 20px;
+
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
+/* Section Headers*/
+
+#contact h1 {
+    font-size: 36px;
+    margin-bottom: 10px;
+    font-family: 'Roxie Rossa', cursive;
+    color: rgba(244, 82, 78);
+}
+
+#contact h3 {
+    font-size: 24px;
+    margin-bottom: 15px;
+    color: #5e5854;
+}
+
+/* Lists Wrapper */
+
+#contact .lists-wrapper {
+    width: 100%;
+    margin-top: 20px;
+
+    display: flex;
+    justify-content: space-between;
+}
+
+/* Contact Columns */
+
 #personal-contact,
 #work-contact {
+    flex: 1;
+    min-width: 350px;
     display: inline-block;
 }
+
+/* Contact Lists */
 
 #personal-contact ul,
 #work-contact ul {
@@ -34,16 +59,21 @@
     font-size: 18px;
 }
 
-#personal-contact,
-#work-contact {
-    display: inline-block;
+#personal-contact ul li,
+#work-contact ul li {
+    white-space: nowrap;
+    color: #5e5854;
+    margin-bottom: 10px;
+    gap: 10px;
 }
 
-#contact .lists-wrapper {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    margin-top: 20px;
+/* Icons & Links */
+
+#contact ul li i {
+    margin-right: 10px;
+    width: 20px;
+    text-align: center;
+    color: #f4524e;
 }
 
 #contact a {
@@ -55,38 +85,10 @@
     text-decoration: underline;
 }
 
-#contact h1 {
-    font-size: 36px;
-    margin-bottom: 10px;
-    font-family: 'Roxie Rossa', cursive;
-    color: rgba(244, 82, 78);
-}
+/* Fonts */
 
 @font-face {
     font-family: 'Roxie Rossa';
-    src: url('../fonts/roxieRossa/Roxie\ rossa.ttf') format('truetype');
+    src: url('../fonts/roxieRossa/Roxie rossa.ttf') format('truetype');
     font-weight: 400;
 }
-
-#personal-contact ul li,
-#work-contact ul li {
-    white-space: nowrap;
-    color: #5e5854;
-    gap: 10px;
-    margin-bottom: 10px;
-}
-
-#contact h3 {
-    font-size: 24px;
-    margin-bottom: 15px;
-    color: #5e5854;
-}
-
-#contact ul li i {
-    margin-right: 10px;
-    color: #f4524e;        
-    width: 20px;           
-    text-align: center;
-}
-
-

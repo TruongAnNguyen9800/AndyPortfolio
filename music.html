@@ -12,17 +12,29 @@
         <h1>My Music Playlist</h1>
         <h4>Enjoy songs while exploring my website</h4>
       </div>
-      <div id="playlist" class="reveal">
-      </div>
+
+    <div class="select-wrapper reveal">
+      <label for="music-playlist">Choose a playlist:</label>
+      <select id="music-playlist">
+        <option value="" selected disabled>- Select a playlist -</option>
+        <option value="rhythm">Rhythm Games OSTs</option>
+        <option value="games">Other Games OSTs</option>
+        <option value="fan">Fan Songs</option>
+        <option value="anime">Anime Songs</option>
+        <option value="other">Others</option>
+      </select>
+    </div>
+
+      <div id="playlist" class="reveal"></div>
     </section>
   </main>
 
-  <!-- Local mini player kept for the music page itself -->
   <div id="mini-player">
     <div id="mp-info">
-      <p id="mp-title">—</p>
+      <p id="mp-title"></p>
       <p id="mp-time">00:00 / 00:00</p>
     </div>
+
     <div id="mp-wave">
       <div class="bar"></div>
       <div class="bar"></div>
@@ -30,10 +42,11 @@
       <div class="bar"></div>
       <div class="bar"></div>
     </div>
+
     <div id="mp-controls">
-      <button id="prevBtn" class="img-btn"><img src="icons/previous.png" alt="Previous"></button>
-      <button id="playPauseBtn" class="img-btn"><img src="icons/pause-play.png" alt="Play"></button>
-      <button id="nextBtn" class="img-btn"><img src="icons/next.png" alt="Next"></button>
+      <button id="prevBtn" class="img-btn"><img src="icons/previous.png"></button>
+      <button id="playPauseBtn" class="img-btn"><img src="icons/pause-play.png"></button>
+      <button id="nextBtn" class="img-btn"><img src="icons/next.png"></button>
     </div>
   </div>
 
