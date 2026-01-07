@@ -292,4 +292,3 @@ function escapeHtml(text) {
 function triggerReveal(element) {
     element.classList.add('active');
 }
-

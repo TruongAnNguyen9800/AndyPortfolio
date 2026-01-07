@@ -28,6 +28,7 @@
     font-size: 24px;
     margin-bottom: 15px;
     color: #5e5854;
+    font-family: 'Montserrat', sans-serif;
 }
 
 /* Lists Wrapper */
@@ -90,5 +91,12 @@
 @font-face {
     font-family: 'Roxie Rossa';
     src: url('../fonts/roxieRossa/Roxie rossa.ttf') format('truetype');
+    font-weight: 400;
+}
+
+@font-face {
+    font-family: 'Montserrat';
+    src: url('../fonts/montserrat/Montserrat-Regular.woff2') format('woff2'),
+         url('../fonts/montserrat/Montserrat-Regular.woff') format('woff');
     font-weight: 400;
 }

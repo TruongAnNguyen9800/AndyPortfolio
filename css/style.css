@@ -78,6 +78,10 @@ section {
 }
 
 #feedback {
+    background-color: #5C5656;
+}
+
+#to-do {
     background-color: #13160d;
 }
 
